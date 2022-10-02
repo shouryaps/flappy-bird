@@ -1,0 +1,22 @@
+{
+  "name": "flappy-bird",
+  "version": "1.0.0",
+  "description": "An implementation of [Flappy Bird](https://en.wikipedia.org/wiki/Flappy_Bird) game written using [LÖVE](https://love2d.org/) in [Lua](https://www.lua.org/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shouryaps/flappy-bird.git"
+  },
+  "author": "Shourya Pratap Singh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shouryaps/flappy-bird/issues"
+  },
+  "homepage": "https://github.com/shouryaps/flappy-bird#readme",
+  "dependencies": {
+    "love.js": "^11.4.1"
+  }
+}
