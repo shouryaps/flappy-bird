@@ -45,20 +45,20 @@ end
 
 function Bird:collides(pipe) -- axis-aligned bounding boxes (AABB)
 
-    local pipe_x = pipe.x
-    local pipe_y = pipe.y
+    local pipeX = pipe.x
+    local pipeY = pipe.y
 
-    -- for top transform the x, y for pipe
+    -- for top transform the y for pipe, to left most point
     if pipe.orientation == TOP then
-        pipe_y = 0
+        pipeY = 0
     end
 
     -- left edge is farther to the right for either
-    if self.x > pipe_x + PIPE_WIDTH or pipe_x > self.x + self.width then
+    if self.x > pipeX + PIPE_WIDTH or pipeX > self.x + self.width then
         return false
     end
     -- bottom edge is higher than top edge of either
-    if self.y > pipe_y + pipe.height or pipe_y > self.y + self.height then
+    if self.y > pipeY + pipe.height or pipeY > self.y + self.height then
         return false
     end
     return true

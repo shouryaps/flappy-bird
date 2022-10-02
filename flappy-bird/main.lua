@@ -84,7 +84,7 @@ function love.update(dt)
     -- update bird
     bird:update(dt)
 
-    -- remove flagged pairs
+    -- remove flagged pairs, save memory!
     for k, pair in pairs(pipePairs) do
         if pair.remove then
             table.remove(pipePairs, k)
