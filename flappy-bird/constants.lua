@@ -18,3 +18,9 @@ BASE_LOOP_POINT = 336 - VIRTUAL_WIDTH -- 336 is the width of base image
 
 -- pipe spawning
 SPAWN_PIPE_SECONDS = 2
+
+PIPE_SCROLL = 60
+PIPE_WIDTH = 52
+
+PIPE_TOP = 1
+PIPE_BOTTOM = 2

@@ -1,11 +1,9 @@
-local lick = require "utils/lick"
-lick.reset = true -- reload love.load everytime you save
-
 local push = require 'utils/push'
 Class = require 'utils/class'
 
 require('constants')
 require('Bird')
+require('PipePair')
 require('Pipe')
 
 local background
@@ -14,8 +12,9 @@ local baseScroll = 0
 local backgroundScroll = 0
 
 local bird
-local pipes = {}
-local spawnTimer = 0
+local pipePairs = {} -- table storing pipe pairs
+local spawnTimer = 0 -- timer for spawing pipe pairs
+
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -64,21 +63,25 @@ function love.update(dt)
     -- update pipes
     spawnTimer = spawnTimer + dt
     if spawnTimer > SPAWN_PIPE_SECONDS then
-        -- add a new pipe
-        table.insert(pipes, Pipe())
+        -- add a new pipe pair
+        table.insert(pipePairs, PipePair())
         -- reset the timer
         spawnTimer = 0
     end
 
-    for k, pipe in pairs(pipes) do
-        pipe:update(dt)
-        if pipe.x < -pipe.width then -- pipe crosses the screen on left
-            table.remove(pipes, k)
-        end
+    for k, pair in pairs(pipePairs) do
+        pair:update(dt) -- update pipe pair
     end
 
     -- update bird
     bird:update(dt)
+
+    -- remove flagged pairs
+    for k, pair in pairs(pipePairs) do
+        if pair.remove then
+            table.remove(pipePairs, k)
+        end
+    end
 
     -- set the table as blank
     love.keyboard.keysPressed = {}
@@ -90,9 +93,9 @@ function love.draw()
     -- draw background with negative x offset
     love.graphics.draw(background, -backgroundScroll, 0)
 
-    -- draw pipe before the base
-    for k, pipe in pairs(pipes) do
-        pipe:render()
+    -- draw pipe pairs before the base
+    for k, pair in pairs(pipePairs) do
+        pair:render()
     end
 
     -- draw base in bottom of screen with negative x offset
