@@ -10,6 +10,7 @@ local background
 local base = love.graphics.newImage(BASE_PATH)
 local baseScroll = 0
 local backgroundScroll = 0
+local gameState = GAME_STATE_START
 
 local bird
 local pipePairs = {} -- table storing pipe pairs
@@ -49,6 +50,23 @@ function love.keypressed(key)
     love.keyboard.keysPressed[key] = true -- store in table
     if key == 'escape' then
         love.event.quit()
+    elseif key == 'space' then
+        if gameState == GAME_STATE_DONE then
+            -- reset game components
+            bird:init()
+            for k in pairs(pipePairs) do
+                pipePairs[k] = nil
+            end
+        end
+        if gameState ~= GAME_STATE_PLAY then
+            gameState = GAME_STATE_PLAY
+        end
+    elseif key == 'p' then
+        if gameState == GAME_STATE_PLAY then
+            gameState = GAME_STATE_PAUSE
+        elseif gameState == GAME_STATE_PAUSE then
+            gameState = GAME_STATE_PLAY
+        end
     end
 end
 
@@ -57,6 +75,14 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
+
+    -- don't proceed to rest of code if not play state
+    if gameState ~= GAME_STATE_PLAY then
+        -- set the table as blank
+        love.keyboard.keysPressed = {}
+        return
+    end
+
     -- parallax scrolling
     baseScroll = (baseScroll + BASE_SCROLL_SPEED * dt) % BASE_LOOP_POINT
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOP_POINT
@@ -76,7 +102,7 @@ function love.update(dt)
         -- check for collisions
         for _, pipe in pairs(pair.pipes) do
             if bird:collides(pipe) then
-                print("Collision", bird.x, bird.y, pipe.x, pipe.y)
+                gameState = GAME_STATE_DONE
             end
         end
     end
@@ -111,6 +137,9 @@ function love.draw()
 
     -- draw base in bottom of screen with negative x offset
     love.graphics.draw(base, -baseScroll, VIRTUAL_HEIGHT - BASE_HEIGHT)
+
+    -- show game state in heading
+    love.graphics.printf(tostring(gameState), 0, 10, VIRTUAL_WIDTH, 'center')
 
     push:finish()
 end

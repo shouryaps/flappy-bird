@@ -4,6 +4,12 @@ WINDOW_HEIGHT = 512
 VIRTUAL_WIDTH = 288
 VIRTUAL_HEIGHT = 512
 
+-- game states
+GAME_STATE_START = 1
+GAME_STATE_PLAY = 2
+GAME_STATE_PAUSE = 3
+GAME_STATE_DONE = 4
+
 -- background
 DAY_BACKGROUND_PATH = "resources/sprites/background-day.png"
 NIGHT_BACKGROUND_PATH = "resources/sprites/background-night.png"
