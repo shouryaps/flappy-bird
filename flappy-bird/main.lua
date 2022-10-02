@@ -1,11 +1,15 @@
 local push = require 'utils/push'
+Class = require 'utils/class'
 
 require('constants')
+require('Bird')
 
 local background
 local base = love.graphics.newImage(BASE_PATH)
 local baseScroll = 0
 local backgroundScroll = 0
+
+local bird
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -16,12 +20,16 @@ function love.load()
     -- select a random time of day and load the image
     background = love.graphics.newImage(math.random(2) == 1 and DAY_BACKGROUND_PATH or NIGHT_BACKGROUND_PATH)
 
+    -- set the title and setup screen
     love.window.setTitle('Flappy Bird')
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,
         fullscreen = false,
         resizable = true
     })
+
+    -- initialize the bird
+    bird = Bird()
 end
 
 function love.resize(w, h)
@@ -47,6 +55,10 @@ function love.draw()
 
     -- draw base in bottom of screen with negative x offset
     love.graphics.draw(base, -baseScroll, VIRTUAL_HEIGHT - BASE_HEIGHT)
+
+    -- draw bird
+    bird:render()
+
 
     push:finish()
 end
