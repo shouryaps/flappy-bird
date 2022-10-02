@@ -11,9 +11,9 @@ function Bird:init()
     self.width = self.image:getWidth()
     self.height = self.image:getHeight()
     self.x = BIRD_X -- somewhere slightly to left
-    self.y = VIRTUAL_HEIGHT / 2 - (self.height / 2) -- start at middle of screen in Y-axis
+    self.y = SCREEN_HEIGHT / 2 - (self.height / 2) -- start at middle of screen in Y-axis
     self.dy = 0 -- initial velocity
-    self.maxY = VIRTUAL_HEIGHT - BASE_HEIGHT - self.height
+    self.maxY = SCREEN_HEIGHT - BASE_HEIGHT - self.height
 end
 
 function Bird:flap()
@@ -32,7 +32,7 @@ end
 
 function Bird:render()
     love.graphics.draw(self.image, self.x, self.y)
-    -- self:showBounds()
+    -- self:_showBounds()
 end
 
 function Bird:collides(pipe) -- axis-aligned bounding boxes (AABB)
@@ -57,7 +57,7 @@ function Bird:collides(pipe) -- axis-aligned bounding boxes (AABB)
 end
 
 -- function for seeing the rect around bird for testing collisions
-function Bird:showBounds()
+function Bird:_showBounds()
     -- show a green rectange around bird
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.rectangle("line", self.x, self.y, self.width, self.height)

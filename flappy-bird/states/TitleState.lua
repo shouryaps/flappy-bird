@@ -6,8 +6,8 @@ local yOffset = 78 -- to move the image a bit up
 function TitleState:enter(params)
     -- initialize the bird
     self.bird = Bird()
-    self.x = (VIRTUAL_WIDTH / 2) - (introImage:getWidth() / 2)
-    self.y = (VIRTUAL_HEIGHT / 2) - (introImage:getHeight() / 2) - yOffset
+    self.x = (SCREEN_WIDTH / 2) - (introImage:getWidth() / 2)
+    self.y = (SCREEN_HEIGHT / 2) - (introImage:getHeight() / 2) - yOffset
 end
 
 function TitleState:update(dt)

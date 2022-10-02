@@ -29,7 +29,7 @@ function love.load()
 
     -- set the title and setup screen
     love.window.setTitle('Flappy Bird')
-    push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
+    push:setupScreen(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,
         fullscreen = false,
         resizable = true
@@ -86,7 +86,7 @@ function love.draw()
     GStateMachine:render()
 
     -- draw base in bottom of screen with negative x offset
-    love.graphics.draw(base, -baseScroll, VIRTUAL_HEIGHT - BASE_HEIGHT)
+    love.graphics.draw(base, -baseScroll, SCREEN_HEIGHT - BASE_HEIGHT)
 
     push:finish()
 end

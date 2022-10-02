@@ -5,12 +5,12 @@ local PIPE_SCROLL = 60
 
 -- constructor
 function Pipe:init(orientation, y)
-    self.x = VIRTUAL_WIDTH -- out of bound initially
+    self.x = SCREEN_WIDTH -- out of bound initially
     self.orientation = orientation
     self.y = y
     -- pre-calculate the height visible
     if orientation == BOTTOM then
-        self.height = VIRTUAL_HEIGHT - self.y - BASE_HEIGHT
+        self.height = SCREEN_HEIGHT - self.y - BASE_HEIGHT
     else
         self.height = self.y
     end

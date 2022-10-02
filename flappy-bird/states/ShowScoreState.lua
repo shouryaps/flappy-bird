@@ -4,8 +4,8 @@ local gameOver = love.graphics.newImage(GAME_OVER_PATH)
 
 function ShowScoreState:enter(params)
     self.score = params.score
-    self.x = (VIRTUAL_WIDTH / 2) - (gameOver:getWidth() / 2)
-    self.y = (VIRTUAL_HEIGHT / 2) - (gameOver:getHeight() / 2)
+    self.x = (SCREEN_WIDTH / 2) - (gameOver:getWidth() / 2)
+    self.y = (SCREEN_HEIGHT / 2) - (gameOver:getHeight() / 2)
 end
 
 function ShowScoreState:update(dt)
@@ -20,5 +20,5 @@ function ShowScoreState:render()
     love.graphics.draw(gameOver, self.x, self.y)
 
     -- show the score
-    love.graphics.printf(tostring(self.score), 0, 10, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(tostring(self.score), 0, 10, SCREEN_WIDTH, 'center')
 end

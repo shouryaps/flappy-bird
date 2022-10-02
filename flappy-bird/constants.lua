@@ -1,8 +1,8 @@
 WINDOW_WIDTH = 288
 WINDOW_HEIGHT = 512
 
-VIRTUAL_WIDTH = 288
-VIRTUAL_HEIGHT = 512
+SCREEN_WIDTH = 288
+SCREEN_HEIGHT = 512
 
 -- title screen
 TITLE_SCREEN_PATH = "resources/sprites/message.png"
@@ -22,7 +22,7 @@ NIGHT_BACKGROUND_PATH = "resources/sprites/background-night.png"
 BASE_PATH = "resources/sprites/base.png"
 BASE_HEIGHT = 112
 BASE_SCROLL_SPEED = 60
-BASE_LOOP_POINT = 336 - VIRTUAL_WIDTH -- 336 is the width of base image
+BASE_LOOP_POINT = 336 - SCREEN_WIDTH -- 336 is the width of base image
 
 -- pipe spawning
 SPAWN_PIPE_SECONDS = 3

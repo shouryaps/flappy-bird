@@ -46,7 +46,7 @@ function PlayState:update(dt)
     self.bird:update(dt)
 
     -- see if bird has hit ground
-    if self.bird.y + self.bird.height >= VIRTUAL_HEIGHT - BASE_HEIGHT then
+    if self.bird.y + self.bird.height >= SCREEN_HEIGHT - BASE_HEIGHT then
         -- show score
         GStateMachine:change(GAME_STATE_SHOW_SCORE, {
             score = self.score
@@ -69,5 +69,5 @@ function PlayState:render()
         pair:render()
     end
     -- show the score
-    love.graphics.printf(tostring(self.score), 0, 10, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(tostring(self.score), 0, 10, SCREEN_WIDTH, 'center')
 end
