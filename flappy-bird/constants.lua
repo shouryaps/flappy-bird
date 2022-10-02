@@ -5,17 +5,15 @@ VIRTUAL_WIDTH = 288
 VIRTUAL_HEIGHT = 512
 
 -- game states
-GAME_STATE_START = 1
-GAME_STATE_PLAY = 2
-GAME_STATE_PAUSE = 3
-GAME_STATE_DONE = 4
+GAME_STATE_TITLE = 1
+GAME_STATE_COUNTDOWN = 2
+GAME_STATE_PLAY = 3
+GAME_STATE_PAUSE = 4
+GAME_STATE_SHOW_SCORE = 5
 
 -- background
 DAY_BACKGROUND_PATH = "resources/sprites/background-day.png"
 NIGHT_BACKGROUND_PATH = "resources/sprites/background-night.png"
-BACKGROUND_SCROLL_SPEED = 10
-BACKGROUND_LOOP_POINT = 556 - VIRTUAL_WIDTH -- 556 is width of background image here
-
 -- base
 BASE_PATH = "resources/sprites/base.png"
 BASE_HEIGHT = 112

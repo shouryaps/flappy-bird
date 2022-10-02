@@ -9,8 +9,7 @@ require('Pipe')
 local background
 local base = love.graphics.newImage(BASE_PATH)
 local baseScroll = 0
-local backgroundScroll = 0
-local gameState = GAME_STATE_START
+local gameState = GAME_STATE_TITLE
 
 local bird
 local pipePairs = {} -- table storing pipe pairs
@@ -51,7 +50,7 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     elseif key == 'space' then
-        if gameState == GAME_STATE_DONE then
+        if gameState == GAME_STATE_SHOW_SCORE then
             -- reset game components
             bird:init()
             for k in pairs(pipePairs) do
@@ -83,9 +82,8 @@ function love.update(dt)
         return
     end
 
-    -- parallax scrolling
+    -- scroll the base
     baseScroll = (baseScroll + BASE_SCROLL_SPEED * dt) % BASE_LOOP_POINT
-    backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOP_POINT
 
     -- update pipes
     spawnTimer = spawnTimer + dt
@@ -102,13 +100,18 @@ function love.update(dt)
         -- check for collisions
         for _, pipe in pairs(pair.pipes) do
             if bird:collides(pipe) then
-                gameState = GAME_STATE_DONE
+                gameState = GAME_STATE_SHOW_SCORE
             end
         end
     end
 
     -- update bird
     bird:update(dt)
+
+    -- see if bird has hit ground
+    if bird.y + bird.height >= VIRTUAL_HEIGHT - BASE_HEIGHT then
+        gameState = GAME_STATE_SHOW_SCORE
+    end
 
     -- remove flagged pairs, save memory!
     for k, pair in pairs(pipePairs) do
@@ -124,8 +127,8 @@ end
 function love.draw()
     push:start()
 
-    -- draw background with negative x offset
-    love.graphics.draw(background, -backgroundScroll, 0)
+    -- draw background
+    love.graphics.draw(background, 0, 0)
 
     -- draw bird
     bird:render()
