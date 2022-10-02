@@ -17,17 +17,23 @@ function PlayState:update(dt)
         self.spawnTimer = 0
     end
 
-    for _, pair in pairs(self.pipePairs) do
+    for k, pair in pairs(self.pipePairs) do
         pair:update(dt) -- update pipe pair
-
+        local pipeX
         -- check for collisions
         for _, pipe in pairs(pair.pipes) do
+            pipeX = pipe.x -- store the x coordinate of pipe
             if self.bird:collides(pipe) then
                 -- show score
                 GStateMachine:change(GAME_STATE_SHOW_SCORE, {
                     score = self.score
                 })
             end
+        end
+
+        if (not pair.counted) and self.bird.x > pipeX + PIPE_WIDTH then
+            self.pipePairs[k].counted = true -- flag as counted
+            self.score = self.score + 1 -- increase the score
         end
     end
 

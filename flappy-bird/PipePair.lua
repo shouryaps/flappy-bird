@@ -22,6 +22,8 @@ function PipePair:init()
     }
     -- flag to mark the pair to be removed
     self.remove = false
+    -- flag to keep track if this pair was included in score
+    self.counted = false
 end
 
 function PipePair:update(dt)
