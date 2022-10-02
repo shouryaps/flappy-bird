@@ -23,7 +23,8 @@ function love.load()
     math.randomseed(os.time())
 
     -- select a random time of day and load the image
-    background = love.graphics.newImage(math.random(2) == 1 and DAY_BACKGROUND_PATH or NIGHT_BACKGROUND_PATH)
+    -- background = love.graphics.newImage(math.random(2) == 1 and DAY_BACKGROUND_PATH or NIGHT_BACKGROUND_PATH)
+    background = love.graphics.newImage(DAY_BACKGROUND_PATH) -- force day background for now
 
     -- set the title and setup screen
     love.window.setTitle('Flappy Bird')
@@ -69,8 +70,15 @@ function love.update(dt)
         spawnTimer = 0
     end
 
-    for k, pair in pairs(pipePairs) do
+    for _, pair in pairs(pipePairs) do
         pair:update(dt) -- update pipe pair
+
+        -- check for collisions
+        for _, pipe in pairs(pair.pipes) do
+            if bird:collides(pipe) then
+                print("Collision", bird.x, bird.y, pipe.x, pipe.y)
+            end
+        end
     end
 
     -- update bird

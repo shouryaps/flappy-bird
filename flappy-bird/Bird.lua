@@ -27,8 +27,39 @@ function Bird:update(dt)
         self.flap(self)
     end
     self.y = self.y + self.dy -- apply velocity to position
+
+    -- don't allow y to leave the base
+    local maxY = VIRTUAL_HEIGHT - BASE_HEIGHT - self.height
+    if self.y > maxY then
+        self.y = maxY
+    end
 end
 
 function Bird:render()
     love.graphics.draw(self.image, self.x, self.y)
+    -- draw a box for testing collision
+    love.graphics.setColor(1, 0, 0, 1)
+    love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+    love.graphics.setColor(1, 1, 1, 1)
+end
+
+function Bird:collides(pipe) -- axis-aligned bounding boxes (AABB)
+
+    local pipe_x = pipe.x
+    local pipe_y = pipe.y
+
+    -- for top transform the x, y for pipe
+    if pipe.orientation == TOP then
+        pipe_y = 0
+    end
+
+    -- left edge is farther to the right for either
+    if self.x > pipe_x + PIPE_WIDTH or pipe_x > self.x + self.width then
+        return false
+    end
+    -- bottom edge is higher than top edge of either
+    if self.y > pipe_y + pipe.height or pipe_y > self.y + self.height then
+        return false
+    end
+    return true
 end
