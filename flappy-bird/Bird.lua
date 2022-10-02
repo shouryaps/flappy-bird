@@ -12,6 +12,10 @@ function Bird:init()
     self.dy = 0 -- initial velocity
 end
 
+function Bird:flap()
+    self.dy = -FLAP_SPEED -- add negative gravity
+end
+
 function Bird:update(dt)
     self.dy = self.dy + (GRAVITY * dt) -- apply gravity to make bird go down
     self.y = self.y + self.dy -- apply velocity to position
