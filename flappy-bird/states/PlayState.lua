@@ -5,6 +5,7 @@ function PlayState:enter(params)
     self.pipePairs = {} -- table storing pipe pairs
     self.spawnTimer = 0 -- timer for spawing pipe pairs
     self.score = Score() -- keep track of score
+    self.bird:flap()
 end
 
 function PlayState:update(dt)
