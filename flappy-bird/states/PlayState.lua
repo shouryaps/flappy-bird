@@ -62,12 +62,12 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
-    -- draw the bird
-    self.bird:render()
     -- draw pipe pairs before the base
     for _, pair in pairs(self.pipePairs) do
         pair:render()
     end
+    -- draw the bird
+    self.bird:render()
     -- show the score
     self.score:render()
 end
