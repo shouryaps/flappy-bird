@@ -43,8 +43,11 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+    -- parallax scrolling
     baseScroll = (baseScroll + BASE_SCROLL_SPEED * dt) % BASE_LOOP_POINT
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOP_POINT
+    -- update bird
+    bird:update(dt)
 end
 
 function love.draw()
