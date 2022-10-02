@@ -17,10 +17,11 @@ BASE_SCROLL_SPEED = 60
 BASE_LOOP_POINT = 336 - VIRTUAL_WIDTH -- 336 is the width of base image
 
 -- pipe spawning
-SPAWN_PIPE_SECONDS = 2
-
-PIPE_SCROLL = 60
+SPAWN_PIPE_SECONDS = 3
+PIPE_MIN_HEIGHT = 200
+PIPE_MAX_HEIGHT = 280
 PIPE_WIDTH = 52
 
-PIPE_TOP = 1
-PIPE_BOTTOM = 2
+-- constants for orientation
+TOP = 1
+BOTTOM = 2

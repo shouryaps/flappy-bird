@@ -5,22 +5,28 @@ local GAP_HEIGHT = 90
 
 -- constructor
 function PipePair:init()
-    self.x = VIRTUAL_WIDTH
-    local y = math.random(200, 250)
+    local y = math.random(200, 300)
+    local smallBottom = math.random(2) == 1
+    local yTop = y
+    local yBottom = y
+    if smallBottom then
+        yBottom = yBottom + GAP_HEIGHT
+    else
+        yTop = yTop - GAP_HEIGHT
+    end
+
+    -- add padding to maintain gap, but randomise which orientation pipe is longer
     self.pipes = {
-        [PIPE_TOP] = Pipe(PIPE_TOP, y),
-        [PIPE_BOTTOM] = Pipe(PIPE_BOTTOM, y)
+        [BOTTOM] = Pipe(BOTTOM, yBottom),
+        [TOP] = Pipe(TOP, yTop)
     }
     -- flag to mark the pair to be removed
     self.remove = false
 end
 
 function PipePair:update(dt)
-    if self.x > -PIPE_WIDTH then -- pipe not crossed the screen on left side
-        self.x = self.x - (PIPE_SCROLL * dt)
-        self.pipes[PIPE_TOP].x = self.x
-        self.pipes[PIPE_BOTTOM].x = self.x
-    else
+    -- pipe crossed screen on left side (check with either of top / bottom)
+    if self.pipes[TOP].x <= -PIPE_WIDTH then
         self.remove = true -- flag for deletion
     end
 

@@ -93,6 +93,9 @@ function love.draw()
     -- draw background with negative x offset
     love.graphics.draw(background, -backgroundScroll, 0)
 
+    -- draw bird
+    bird:render()
+
     -- draw pipe pairs before the base
     for k, pair in pairs(pipePairs) do
         pair:render()
@@ -100,9 +103,6 @@ function love.draw()
 
     -- draw base in bottom of screen with negative x offset
     love.graphics.draw(base, -baseScroll, VIRTUAL_HEIGHT - BASE_HEIGHT)
-
-    -- draw bird
-    bird:render()
 
     push:finish()
 end

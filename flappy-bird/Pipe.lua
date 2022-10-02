@@ -1,6 +1,7 @@
 Pipe = Class {}
 
 local PIPE_IMAGE = love.graphics.newImage("resources/sprites/pipe-green.png")
+local PIPE_SCROLL = 60
 
 -- constructor
 function Pipe:init(orientation, y)
@@ -14,7 +15,7 @@ function Pipe:update(dt)
 end
 
 function Pipe:render()
-    if self.orientation == PIPE_BOTTOM then
+    if self.orientation == BOTTOM then
         love.graphics.draw(PIPE_IMAGE, self.x, self.y)
     else
         love.graphics.draw(PIPE_IMAGE, self.x, self.y, 0, 1, -1) -- scale y - axis
