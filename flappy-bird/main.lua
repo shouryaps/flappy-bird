@@ -1,3 +1,6 @@
+lick = require "utils/lick"
+lick.reset = true -- reload love.load everytime you save
+
 local push = require 'utils/push'
 Class = require 'utils/class'
 
@@ -30,6 +33,9 @@ function love.load()
 
     -- initialize the bird
     bird = Bird()
+
+    -- table for storing keys pressed
+    love.keyboard.keysPressed = {}
 end
 
 function love.resize(w, h)
@@ -37,21 +43,14 @@ function love.resize(w, h)
 end
 
 function love.keypressed(key)
+    love.keyboard.keysPressed[key] = true -- store in table
     if key == 'escape' then
         love.event.quit()
     end
 end
 
-function love.keyreleased(key)
-    if key == 'space' then
-        bird:flap()
-    end
-end
-
-function love.mousereleased(x, y, button)
-    if button == 1 then
-        bird:flap()
-    end
+function love.keyboard.wasPressed(key)
+    return love.keyboard.keysPressed[key]
 end
 
 function love.update(dt)
@@ -61,6 +60,9 @@ function love.update(dt)
 
     -- update bird
     bird:update(dt)
+
+    -- set the table as blank
+    love.keyboard.keysPressed = {}
 end
 
 function love.draw()

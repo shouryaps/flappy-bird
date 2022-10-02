@@ -18,6 +18,9 @@ end
 
 function Bird:update(dt)
     self.dy = self.dy + (GRAVITY * dt) -- apply gravity to make bird go down
+    if love.keyboard.wasPressed('space') then
+        self.flap(self)
+    end
     self.y = self.y + self.dy -- apply velocity to position
 end
 
