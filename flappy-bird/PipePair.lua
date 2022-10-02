@@ -5,7 +5,7 @@ local GAP_HEIGHT = 90
 
 -- constructor
 function PipePair:init()
-    local y = math.random(200, 300)
+    local y = math.random(PIPE_MIN_HEIGHT, PIPE_MAX_HEIGHT)
     local smallBottom = math.random(2) == 1
     local yTop = y
     local yBottom = y
