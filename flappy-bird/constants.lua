@@ -6,6 +6,8 @@ VIRTUAL_HEIGHT = 512
 
 -- background
 DAY_BACKGROUND_PATH = "resources/background-day.png"
+BACKGROUND_SCROLL_SPEED = 10
+BACKGROUND_LOOP_POINT = 556 - VIRTUAL_WIDTH -- 556 is width of background image here
 
 -- base
 BASE_PATH = "resources/base.png"
