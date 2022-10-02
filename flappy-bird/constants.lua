@@ -21,4 +21,4 @@ BIRD_PATH = "resources/sprites/yellowbird.png"
 BIRD_X = 88
 FLAP_SPEED = 4
 
-GRAVITY = 10
+GRAVITY = 7

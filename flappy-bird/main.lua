@@ -42,6 +42,18 @@ function love.keypressed(key)
     end
 end
 
+function love.keyreleased(key)
+    if key == 'space' then
+        bird:flap()
+    end
+end
+
+function love.mousereleased(x, y, button)
+    if button == 1 then
+        bird:flap()
+    end
+end
+
 function love.update(dt)
     -- parallax scrolling
     baseScroll = (baseScroll + BASE_SCROLL_SPEED * dt) % BASE_LOOP_POINT
@@ -49,10 +61,6 @@ function love.update(dt)
 
     -- update bird
     bird:update(dt)
-
-    if love.keyboard.isDown('space') or love.mouse.isDown(1) then
-        bird:flap()
-    end
 end
 
 function love.draw()
