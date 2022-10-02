@@ -1,6 +1,6 @@
 Pipe = Class {}
 
-local PIPE_IMAGE = love.graphics.newImage("resources/sprites/pipe-green.png")
+local PIPE_IMAGE = love.graphics.newImage("resources/sprites/pipe.png")
 local PIPE_SCROLL = 60
 
 -- constructor
