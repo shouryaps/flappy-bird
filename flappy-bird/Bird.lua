@@ -1,5 +1,10 @@
 Bird = Class {}
 
+local BIRD_PATH = "resources/sprites/yellowbird.png"
+local BIRD_X = 88
+local FLAP_SPEED = 5 -- will be applied negatively
+local GRAVITY = 20
+
 -- constructor
 function Bird:init()
     self.image = love.graphics.newImage(BIRD_PATH)

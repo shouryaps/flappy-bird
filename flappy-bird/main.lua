@@ -1,4 +1,4 @@
-lick = require "utils/lick"
+local lick = require "utils/lick"
 lick.reset = true -- reload love.load everytime you save
 
 local push = require 'utils/push'
@@ -6,6 +6,7 @@ Class = require 'utils/class'
 
 require('constants')
 require('Bird')
+require('Pipe')
 
 local background
 local base = love.graphics.newImage(BASE_PATH)
@@ -13,6 +14,8 @@ local baseScroll = 0
 local backgroundScroll = 0
 
 local bird
+local pipes = {}
+local spawnTimer = 0
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -58,6 +61,22 @@ function love.update(dt)
     baseScroll = (baseScroll + BASE_SCROLL_SPEED * dt) % BASE_LOOP_POINT
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOP_POINT
 
+    -- update pipes
+    spawnTimer = spawnTimer + dt
+    if spawnTimer > SPAWN_PIPE_SECONDS then
+        -- add a new pipe
+        table.insert(pipes, Pipe())
+        -- reset the timer
+        spawnTimer = 0
+    end
+
+    for k, pipe in pairs(pipes) do
+        pipe:update(dt)
+        if pipe.x < -pipe.width then -- pipe crosses the screen on left
+            table.remove(pipes, k)
+        end
+    end
+
     -- update bird
     bird:update(dt)
 
@@ -71,12 +90,16 @@ function love.draw()
     -- draw background with negative x offset
     love.graphics.draw(background, -backgroundScroll, 0)
 
+    -- draw pipe before the base
+    for k, pipe in pairs(pipes) do
+        pipe:render()
+    end
+
     -- draw base in bottom of screen with negative x offset
     love.graphics.draw(base, -baseScroll, VIRTUAL_HEIGHT - BASE_HEIGHT)
 
     -- draw bird
     bird:render()
-
 
     push:finish()
 end

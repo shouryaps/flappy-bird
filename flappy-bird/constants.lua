@@ -16,9 +16,5 @@ BASE_HEIGHT = 112
 BASE_SCROLL_SPEED = 60
 BASE_LOOP_POINT = 336 - VIRTUAL_WIDTH -- 336 is the width of base image
 
--- bird
-BIRD_PATH = "resources/sprites/yellowbird.png"
-BIRD_X = 88
-FLAP_SPEED = 5 -- will be applied negatively
-
-GRAVITY = 20
+-- pipe spawning
+SPAWN_PIPE_SECONDS = 2
