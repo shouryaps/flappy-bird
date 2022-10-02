@@ -36,6 +36,13 @@ function love.load()
         resizable = true
     })
 
+    -- load sound effects for global usage
+    Sounds = {
+        [SOUND_FLAP] = love.audio.newSource(SOUND_FLAP_PATH, 'static'),
+        [SOUND_POINT] = love.audio.newSource(SOUND_POINT_PATH, 'static'),
+        [SOUND_HIT] = love.audio.newSource(SOUND_HIT_PATH, 'static')
+    }
+
     -- define the global game state machine
     GStateMachine = StateMachine {
         [GAME_STATE_TITLE] = function() return TitleState() end,

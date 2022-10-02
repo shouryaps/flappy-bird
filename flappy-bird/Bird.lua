@@ -18,6 +18,7 @@ end
 
 function Bird:flap()
     self.dy = -FLAP_SPEED -- add negative gravity
+    Sounds[SOUND_FLAP]:play()
 end
 
 function Bird:update(dt)

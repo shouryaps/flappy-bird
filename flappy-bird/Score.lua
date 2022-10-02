@@ -26,6 +26,7 @@ end
 function Score:point()
     self.score = self.score + 1
     self:_precalculate()
+    Sounds[SOUND_POINT]:play()
 end
 
 -- pre calculates the values before next render
