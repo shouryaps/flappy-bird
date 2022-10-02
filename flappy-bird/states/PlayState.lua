@@ -38,7 +38,7 @@ function PlayState:update(dt)
     end
 
     -- flap the bird
-    if love.keyboard.wasPressed('space') then
+    if TapHappened then
         self.bird:flap()
     end
 

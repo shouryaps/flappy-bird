@@ -13,7 +13,7 @@ end
 function TitleState:update(dt)
     -- don't update the bird
     -- start the game if condition met
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') then
+    if TapHappened then
         GStateMachine:change(GAME_STATE_PLAY, {
             bird = self.bird
         })

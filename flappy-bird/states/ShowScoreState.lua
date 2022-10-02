@@ -11,7 +11,7 @@ end
 
 function ShowScoreState:update(dt)
     -- check to restart the game
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') then
+    if TapHappened then
         GStateMachine:change(GAME_STATE_TITLE)
     end
 end

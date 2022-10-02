@@ -52,8 +52,8 @@ function love.load()
     -- set the initial game state
     GStateMachine:change(GAME_STATE_TITLE)
 
-    -- table for storing keys pressed
-    love.keyboard.keysPressed = {}
+    -- flag to store whether a tap happened
+    TapHappened = false
 end
 
 function love.resize(w, h)
@@ -61,14 +61,19 @@ function love.resize(w, h)
 end
 
 function love.keypressed(key)
-    love.keyboard.keysPressed[key] = true -- store in table
     if key == 'escape' then
         love.event.quit()
+    elseif key == 'space' then
+        TapHappened = true
     end
 end
 
-function love.keyboard.wasPressed(key)
-    return love.keyboard.keysPressed[key]
+function love.touchreleased(id, x, y, dx, dy, pressure)
+    TapHappened = true
+end
+
+function love.mousereleased( x, y, button, istouch, presses)
+    TapHappened = true
 end
 
 function love.update(dt)
@@ -80,8 +85,8 @@ function love.update(dt)
     -- now, we just update the state machine, which defers to the right state
     GStateMachine:update(dt)
 
-    -- set the table as blank
-    love.keyboard.keysPressed = {}
+    -- reset the tap happened flag
+    TapHappened = false
 end
 
 function love.draw()
