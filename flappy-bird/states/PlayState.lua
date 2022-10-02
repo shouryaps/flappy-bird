@@ -4,7 +4,7 @@ function PlayState:enter(params)
     self.bird = params.bird
     self.pipePairs = {} -- table storing pipe pairs
     self.spawnTimer = 0 -- timer for spawing pipe pairs
-    self.score = 0 -- keep track of score
+    self.score = Score() -- keep track of score
 end
 
 function PlayState:update(dt)
@@ -33,7 +33,7 @@ function PlayState:update(dt)
 
         if (not pair.counted) and self.bird.x > pipeX + PIPE_WIDTH then
             self.pipePairs[k].counted = true -- flag as counted
-            self.score = self.score + 1 -- increase the score
+            self.score:point() -- increase the score
         end
     end
 
@@ -69,5 +69,5 @@ function PlayState:render()
         pair:render()
     end
     -- show the score
-    love.graphics.printf(tostring(self.score), 0, 10, SCREEN_WIDTH, 'center')
+    self.score:render()
 end

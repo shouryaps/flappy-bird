@@ -20,5 +20,5 @@ function ShowScoreState:render()
     love.graphics.draw(gameOver, self.x, self.y)
 
     -- show the score
-    love.graphics.printf(tostring(self.score), 0, 10, SCREEN_WIDTH, 'center')
+    self.score:render()
 end

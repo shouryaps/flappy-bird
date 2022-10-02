@@ -5,6 +5,7 @@ require('constants')
 require('Bird')
 require('PipePair')
 require('Pipe')
+require('Score')
 
 -- state machine and states
 require('utils/StateMachine')
