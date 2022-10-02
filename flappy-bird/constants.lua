@@ -20,9 +20,9 @@ SOUND_FLAP = 1
 SOUND_POINT = 2
 SOUND_HIT = 3
 
-SOUND_FLAP_PATH = "resources/sounds/wing.wav"
-SOUND_POINT_PATH = "resources/sounds/point.wav"
-SOUND_HIT_PATH = "resources/sounds/hit.wav"
+SOUND_FLAP_PATH = "resources/sounds/wing.ogg"
+SOUND_POINT_PATH = "resources/sounds/point.ogg"
+SOUND_HIT_PATH = "resources/sounds/hit.ogg"
 
 -- background
 DAY_BACKGROUND_PATH = "resources/sprites/background-day.png"
