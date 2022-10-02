@@ -4,6 +4,10 @@ WINDOW_HEIGHT = 512
 VIRTUAL_WIDTH = 288
 VIRTUAL_HEIGHT = 512
 
+-- title screen
+TITLE_SCREEN_PATH = "resources/sprites/message.png"
+GAME_OVER_PATH = "resources/sprites/gameover.png"
+
 -- game states
 GAME_STATE_TITLE = 1
 GAME_STATE_COUNTDOWN = 2

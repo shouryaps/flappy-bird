@@ -6,15 +6,16 @@ require('Bird')
 require('PipePair')
 require('Pipe')
 
+-- state machine and states
+require('utils/StateMachine')
+require('states/State')
+require('states/TitleState')
+require('states/PlayState')
+require('states/ShowScoreState')
+
 local background
 local base = love.graphics.newImage(BASE_PATH)
 local baseScroll = 0
-local gameState = GAME_STATE_TITLE
-
-local bird
-local pipePairs = {} -- table storing pipe pairs
-local spawnTimer = 0 -- timer for spawing pipe pairs
-
 
 function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -34,8 +35,14 @@ function love.load()
         resizable = true
     })
 
-    -- initialize the bird
-    bird = Bird()
+    -- define the global game state machine
+    GStateMachine = StateMachine {
+        [GAME_STATE_TITLE] = function() return TitleState() end,
+        [GAME_STATE_PLAY] = function() return PlayState() end,
+        [GAME_STATE_SHOW_SCORE] = function() return ShowScoreState() end,
+    }
+    -- set the initial game state
+    GStateMachine:change(GAME_STATE_TITLE)
 
     -- table for storing keys pressed
     love.keyboard.keysPressed = {}
@@ -49,23 +56,6 @@ function love.keypressed(key)
     love.keyboard.keysPressed[key] = true -- store in table
     if key == 'escape' then
         love.event.quit()
-    elseif key == 'space' then
-        if gameState == GAME_STATE_SHOW_SCORE then
-            -- reset game components
-            bird:init()
-            for k in pairs(pipePairs) do
-                pipePairs[k] = nil
-            end
-        end
-        if gameState ~= GAME_STATE_PLAY then
-            gameState = GAME_STATE_PLAY
-        end
-    elseif key == 'p' then
-        if gameState == GAME_STATE_PLAY then
-            gameState = GAME_STATE_PAUSE
-        elseif gameState == GAME_STATE_PAUSE then
-            gameState = GAME_STATE_PLAY
-        end
     end
 end
 
@@ -74,51 +64,13 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
-
-    -- don't proceed to rest of code if not play state
-    if gameState ~= GAME_STATE_PLAY then
-        -- set the table as blank
-        love.keyboard.keysPressed = {}
-        return
+    if GStateMachine:state() ~= GAME_STATE_SHOW_SCORE then
+        -- scroll the base
+        baseScroll = (baseScroll + BASE_SCROLL_SPEED * dt) % BASE_LOOP_POINT
     end
 
-    -- scroll the base
-    baseScroll = (baseScroll + BASE_SCROLL_SPEED * dt) % BASE_LOOP_POINT
-
-    -- update pipes
-    spawnTimer = spawnTimer + dt
-    if spawnTimer > SPAWN_PIPE_SECONDS then
-        -- add a new pipe pair
-        table.insert(pipePairs, PipePair())
-        -- reset the timer
-        spawnTimer = 0
-    end
-
-    for _, pair in pairs(pipePairs) do
-        pair:update(dt) -- update pipe pair
-
-        -- check for collisions
-        for _, pipe in pairs(pair.pipes) do
-            if bird:collides(pipe) then
-                gameState = GAME_STATE_SHOW_SCORE
-            end
-        end
-    end
-
-    -- update bird
-    bird:update(dt)
-
-    -- see if bird has hit ground
-    if bird.y + bird.height >= VIRTUAL_HEIGHT - BASE_HEIGHT then
-        gameState = GAME_STATE_SHOW_SCORE
-    end
-
-    -- remove flagged pairs, save memory!
-    for k, pair in pairs(pipePairs) do
-        if pair.remove then
-            table.remove(pipePairs, k)
-        end
-    end
+    -- now, we just update the state machine, which defers to the right state
+    GStateMachine:update(dt)
 
     -- set the table as blank
     love.keyboard.keysPressed = {}
@@ -130,19 +82,11 @@ function love.draw()
     -- draw background
     love.graphics.draw(background, 0, 0)
 
-    -- draw bird
-    bird:render()
-
-    -- draw pipe pairs before the base
-    for k, pair in pairs(pipePairs) do
-        pair:render()
-    end
+    -- draw based on game state
+    GStateMachine:render()
 
     -- draw base in bottom of screen with negative x offset
     love.graphics.draw(base, -baseScroll, VIRTUAL_HEIGHT - BASE_HEIGHT)
-
-    -- show game state in heading
-    love.graphics.printf(tostring(gameState), 0, 10, VIRTUAL_WIDTH, 'center')
 
     push:finish()
 end
