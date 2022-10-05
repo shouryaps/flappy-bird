@@ -7,6 +7,7 @@ function ShowScoreState:enter(params)
     self.score = params.score
     self.x = (SCREEN_WIDTH / 2) - (gameOver:getWidth() / 2)
     self.y = (SCREEN_HEIGHT / 2) - (gameOver:getHeight() / 2)
+    self.backgroundIndex = params.backgroundIndex
 end
 
 function ShowScoreState:update(dt)
@@ -17,6 +18,9 @@ function ShowScoreState:update(dt)
 end
 
 function ShowScoreState:render()
+    -- show the background
+    love.graphics.draw(Backgrounds[self.backgroundIndex], 0, 0)
+
     -- show the game over screen
     love.graphics.draw(gameOver, self.x, self.y)
 

@@ -1,25 +1,37 @@
 Bird = Class {}
 
-local birdSprites
+local birdSprites = {
+    {
+        love.graphics.newImage("resources/sprites/yellowbird-upflap.png"),
+        love.graphics.newImage("resources/sprites/yellowbird-midflap.png"),
+        love.graphics.newImage("resources/sprites/yellowbird-downflap.png")
+    },
+    {
+        love.graphics.newImage("resources/sprites/bluebird-upflap.png"),
+        love.graphics.newImage("resources/sprites/bluebird-midflap.png"),
+        love.graphics.newImage("resources/sprites/bluebird-downflap.png")
+    },
+    {
+        love.graphics.newImage("resources/sprites/redbird-upflap.png"),
+        love.graphics.newImage("resources/sprites/redbird-midflap.png"),
+        love.graphics.newImage("resources/sprites/redbird-downflap.png")
+    },
+}
 
 local BIRD_X = 88
 local FLAP_SPEED = 5 -- will be applied negatively
 local GRAVITY = 20
 
 local FLAP_DURATION = 0.5
-local currentTime = 0
+local flapTimer = 0
 
 -- constructor̦
 function Bird:init()
-    self.spriteIndex = 2
+    self.birdIndex = math.random(3) -- indicates the bird colour
+    self.spriteIndex = 2 -- starting frame for flapping animation
     self.currentTime = 0
-    birdSprites = {
-        [1] = love.graphics.newImage("resources/sprites/yellowbird-upflap.png"),
-        [2] = love.graphics.newImage("resources/sprites/yellowbird-midflap.png"),
-        [3] = love.graphics.newImage("resources/sprites/yellowbird-downflap.png")
-    }
-    self.width = birdSprites[self.spriteIndex]:getWidth()
-    self.height = birdSprites[self.spriteIndex]:getHeight()
+    self.width = birdSprites[self.birdIndex][self.spriteIndex]:getWidth()
+    self.height = birdSprites[self.birdIndex][self.spriteIndex]:getHeight()
     self.x = BIRD_X -- somewhere slightly to left
     self.y = SCREEN_HEIGHT / 2 - (self.height / 2) -- start at middle of screen in Y-axis
     self.dy = 0 -- initial velocity
@@ -42,19 +54,19 @@ function Bird:update(dt)
         end
     end
 
-    currentTime = currentTime + dt
-    if currentTime >= FLAP_DURATION then
-        currentTime = currentTime - FLAP_DURATION
+    flapTimer = flapTimer + dt
+    if flapTimer >= FLAP_DURATION then
+        flapTimer = flapTimer - FLAP_DURATION
     end
 
     -- update the sprite index
-    self.spriteIndex = math.floor(currentTime / FLAP_DURATION * #birdSprites)+1
-    self.width = birdSprites[self.spriteIndex]:getWidth()
-    self.height = birdSprites[self.spriteIndex]:getHeight()
+    self.spriteIndex = math.floor(flapTimer / FLAP_DURATION * #birdSprites[self.birdIndex])+1
+    self.width = birdSprites[self.birdIndex][self.spriteIndex]:getWidth()
+    self.height = birdSprites[self.birdIndex][self.spriteIndex]:getHeight()
 end
 
 function Bird:render()
-    love.graphics.draw(birdSprites[self.spriteIndex], self.x, self.y)
+    love.graphics.draw(birdSprites[self.birdIndex][self.spriteIndex], self.x, self.y)
     -- self:_showBounds()
 end
 

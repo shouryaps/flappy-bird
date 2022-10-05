@@ -6,6 +6,7 @@ function PlayState:enter(params)
     self.spawnTimer = 0 -- timer for spawing pipe pairs
     self.score = Score() -- keep track of score
     self.bird:flap()
+    self.backgroundIndex = params.backgroundIndex
 end
 
 function PlayState:update(dt)
@@ -27,7 +28,8 @@ function PlayState:update(dt)
             if self.bird:collides(pipe) then
                 -- show score
                 GStateMachine:change(GAME_STATE_SHOW_SCORE, {
-                    score = self.score
+                    score = self.score,
+                    backgroundIndex = self.backgroundIndex,
                 })
             end
         end
@@ -50,7 +52,8 @@ function PlayState:update(dt)
     if self.bird.y + self.bird.height >= SCREEN_HEIGHT - BASE_HEIGHT then
         -- show score
         GStateMachine:change(GAME_STATE_SHOW_SCORE, {
-            score = self.score
+            score = self.score,
+            backgroundIndex = self.backgroundIndex,
         })
     end
 
@@ -63,6 +66,8 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    -- show the background
+    love.graphics.draw(Backgrounds[self.backgroundIndex], 0, 0)
     -- draw pipe pairs before the base
     for _, pair in pairs(self.pipePairs) do
         pair:render()

@@ -14,7 +14,12 @@ require('states/TitleState')
 require('states/PlayState')
 require('states/ShowScoreState')
 
-local background
+Backgrounds = {
+    love.graphics.newImage(DAY_BACKGROUND_PATH),
+    love.graphics.newImage(NIGHT_BACKGROUND_PATH),
+}
+
+local backgroundIndex = 1
 local base = love.graphics.newImage(BASE_PATH)
 local baseScroll = 0
 
@@ -23,10 +28,6 @@ function love.load()
 
     -- initialise the random generator
     math.randomseed(os.time())
-
-    -- select a random time of day and load the image
-    -- background = love.graphics.newImage(math.random(2) == 1 and DAY_BACKGROUND_PATH or NIGHT_BACKGROUND_PATH)
-    background = love.graphics.newImage(DAY_BACKGROUND_PATH) -- force day background for now
 
     -- set the title and setup screen
     love.window.setTitle('Flappy Bird')
@@ -91,9 +92,6 @@ end
 
 function love.draw()
     push:start()
-
-    -- draw background
-    love.graphics.draw(background, 0, 0)
 
     -- draw based on game state
     GStateMachine:render()
