@@ -11,7 +11,8 @@ function TitleState:enter(params)
 end
 
 function TitleState:update(dt)
-    -- don't update the bird
+    -- update bird
+    self.bird:update(dt)
     -- start the game if condition met
     if TapHappened then
         GStateMachine:change(GAME_STATE_PLAY, {
